@@ -35,12 +35,44 @@ LinkedList.prototype.add = function(val) {
   current.next = node;
 }
 LinkedList.prototype.remove = function() {
-  let current = this.head;
-  if(!current){  // if(current===null)
+  var curr = this.head;
+  if(!curr){  // if(current===null)
     return null;
   }
+  if(curr.next===null){
+    this.head = null;
+    return curr.value
+  }
+  while(curr.next.next){
+    curr = curr.next
+  }
+  var aux = curr.next;
+  curr.next = null;
+  return aux.value;
 }
-LinkedList.prototype.search = function() {}
+LinkedList.prototype.search = function(arg) {
+  var curr = this.head;
+  //validacion lista vacia
+  if(!curr){ // if(curr===null)
+    return null;
+  }
+  // lista no vacia
+  while(curr){
+    //arg es una funcion??
+    if(typeof arg === 'function'){
+      //la funcion que me pasan devuelve un booleano
+      //si devuelve True --- ENCONTRE EL VALOR
+      //la debo ejecutar con el valor del nodo
+      if(arg(curr.value)){
+        //retorno ese valor
+        return curr.value;
+      }
+    }
+    if(curr.value=== arg) return curr.value;
+    curr = curr.next;
+  }
+  return null;
+}
 
 /*
 Implementar la clase HashTable.
